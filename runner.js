@@ -7,13 +7,29 @@ var linearAlgebra = require('linear-algebra')(),     // initialise it
     Utility = require('./modules/utility')();
 
 var trainingX = new Matrix([
-        [1, 2]
+        [1, 0, 0],
+        [1, 0, 1],
+        [1, 1, 0],
+        [1, 1, 1]
 
 ]);
 
-var network = new NeuralNetwork([1], trainingX);
+var network = new NeuralNetwork([2, 1], trainingX);
+network.thetas = [
+    new Matrix([
+        [-30, 20, 20],
+        [10, -20, -20]
+    ]),
+    new Matrix([
+        [-10, 20, 20]
+    ])
+]
 
-console.log(network.forwardProp(0));
+for (var idx = 0; idx < trainingX.rows; idx++) {
+    console.log(network.forwardProp(idx));
+}
+
+
 
 
 

@@ -10,7 +10,7 @@ module.exports = function () {
                 for (row = 0; row < x; row++) {
                     rowArr = [];
                     for (col = 0; col < y; col++) {
-                        rowArr.push(Math.random());
+                        rowArr.push(col);
                     }
                     rows.push(rowArr);
                 }

@@ -27,17 +27,19 @@ module.exports = function () {
                 layer,
                 theta,
                 currentActivation = new Matrix(this.trainingData.data[trainingSetIdx]);
-            console.log(currentActivation.data );
+            //console.log(currentActivation);
             for (layer = 0; layer < this.thetas.length; layer++) {
                 activation = [];
                 theta = this.thetas[layer];
-                if (this.thetas.length !== layer + 1) {
-                    activation.push(1);
-                }
                 for (i = 0; i < theta.rows; i++) {
-                    activation.push(new Matrix(theta.data[i]).trans().dot(currentActivation).sigmoid().getSum());
+                    activation.push(new Matrix(theta.data[i]).dot(currentActivation.trans()).getSum());
                 }
-                currentActivation = new Matrix(activation);
+                currentActivation = new Matrix(activation).sigmoid();
+                if (this.thetas.length !== layer + 1) {
+
+                    currentActivation.data[0].unshift(1);
+                    currentActivation = new Matrix(currentActivation.data);
+                }
             }
 
             return currentActivation;
