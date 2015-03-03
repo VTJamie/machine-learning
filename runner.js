@@ -14,7 +14,14 @@ var trainingX = new Matrix([
 
 ]);
 
-var network = new NeuralNetwork([2, 1], trainingX);
+var trainingY = new Matrix([
+   [1],
+    [0],
+    [0],
+    [1]
+]);
+
+var network = new NeuralNetwork([2, 1], trainingX, trainingY, 0.001);
 network.thetas = [
     new Matrix([
         [-30, 20, 20],
@@ -23,11 +30,13 @@ network.thetas = [
     new Matrix([
         [-10, 20, 20]
     ])
-]
+];
 
-for (var idx = 0; idx < trainingX.rows; idx++) {
-    console.log(network.forwardProp(idx));
-}
+
+console.log(network.cost());
+//for (var idx = 0; idx < trainingX.rows; idx++) {
+//    console.log(network.forwardProp(idx));
+//}
 
 
 
