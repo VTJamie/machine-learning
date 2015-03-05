@@ -1,5 +1,5 @@
 module.exports = function () {
-    var linearAlgebra = require('linear-algebra')(),     // initialise it
+    var linearAlgebra = require('sylvester')(),     // initialise it
         Vector = linearAlgebra.Vector,
         Matrix = linearAlgebra.Matrix
     GradientDescent = function () {
