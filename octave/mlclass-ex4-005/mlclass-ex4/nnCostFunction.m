@@ -109,8 +109,19 @@ gd2 = a2 - (a2.*a2);
 d2 = ((d3*Theta2).*gd2)(:, 2:end);
 
 
-Theta2_grad = (a2'*d3/m)'
-Theta1_grad = (X'*d2/m)'
+
+temptheta1 = Theta1;
+temptheta2 = Theta2;
+
+temptheta1(:, 1) = zeros(size(Theta1)(1), 1);
+temptheta2(:, 1) = zeros(size(Theta2)(1), 1);
+
+
+Theta1_grad = (X'*d2/m)' + temptheta1*(lambda/m)
+
+Theta2_grad = (a2'*d3/m)' + temptheta2*(lambda/m)
+
+
 
 
 % -------------------------------------------------------------
