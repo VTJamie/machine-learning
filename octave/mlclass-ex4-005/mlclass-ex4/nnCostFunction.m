@@ -24,8 +24,8 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
-% You need to return the following variables correctly 
+
+% You need to return the following variables correctly
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
@@ -46,12 +46,12 @@ Theta2_grad = zeros(size(Theta2));
 %         that your implementation is correct by running checkNNGradients
 %
 %         Note: The vector y passed into the function is a vector of labels
-%               containing values from 1..K. You need to map this vector into a 
+%               containing values from 1..K. You need to map this vector into a
 %               binary vector of 1's and 0's to be used with the neural network
 %               cost function.
 %
 %         Hint: We recommend implementing backpropagation using a for-loop
-%               over the training examples if you are implementing it for the 
+%               over the training examples if you are implementing it for the
 %               first time.
 %
 % Part 3: Implement regularization with the cost function and gradients.
@@ -62,9 +62,8 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
- y
-X = [ones(m, 1) X];
 
+X = [ones(m, 1) X];
 
 a2 =  sigmoid(X*Theta1');
 
@@ -77,33 +76,41 @@ for k = 1:num_labels
   ky = y == k;
 
   for i = 1:m
-    first = -ky(i)*log(a3(i));
-    second = (1-ky(i))*log(1-a3(i));
-    J = J + (first-second);
+    first = -ky(i)*log(a3(i,k));
+    second = -(1-ky(i))*log(1-a3(i,k));
+    J = J + (first+second);
   endfor
 endfor
-   J = J/m
-%p
-
-%nn_params
-%input_layer_size
-%hidden_layer_size
-%num_labels
-%X
-%y
-%lambda
+   J = J/m;
 
 
 
+temptheta1 = Theta1;
+temptheta2 = Theta2;
+temptheta1(:, 1) = [];
+temptheta2(:, 1) = [];
+
+ts1 = sum(sum(temptheta1.*temptheta1));
+ts2 = sum(sum(temptheta2.*temptheta2));
+
+reg = ts1 + ts2;
+
+J = J + reg * (lambda/(2*m));
 
 
+d3 = zeros(size(y), num_labels);
+
+for k = 1:num_labels
+    d3(:, k) = a3(:, k) - (y == k);
+endfor
+
+gd2 = a2 - (a2.*a2);
+
+d2 = ((d3*Theta2).*gd2)(:, 2:end);
 
 
-
-
-
-
-
+Theta2_grad = (a2'*d3/m)'
+Theta1_grad = (X'*d2/m)'
 
 
 % -------------------------------------------------------------
