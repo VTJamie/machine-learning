@@ -1,3 +1,4 @@
+.DS_Store
 octave-workspace/
 node_modules/
 *.iml
