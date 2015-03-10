@@ -1,5 +1,6 @@
 .DS_Store
-octave-workspace/
+money/octave-workspace
+octave-workspace
 node_modules/
 *.iml
 .idea/
